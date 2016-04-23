@@ -11,7 +11,9 @@ var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local'),Strategy;
 var mongo = require('mongodb');
-var monggose = require('mongoose');
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/elearn');
+var db = mongoose.connection;
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -105,4 +107,7 @@ app.use(function(err, req, res, next) {
 });
 
 
-module.exports = app;
+app.listen(3000, function(){
+  console.log("Running");
+});
+//module.exports = app;
