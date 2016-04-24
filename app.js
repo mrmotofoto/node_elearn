@@ -67,10 +67,19 @@ app.use(expressValidator({
 //CONNECT-FLASH------------------------------
 app.use(flash());
 
+app.get('*', function(req, res, next) {
+  res.locals.user = req.user || null;
+  if(req.user) {
+    res.locals.type = req.user.type;
+  }
+  next();
+});
+
 //GLOBAL VARS--------------------------------
 app.use(function (req, res, next) {
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
   next();
 });
 
