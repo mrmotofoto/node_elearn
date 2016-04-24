@@ -2,7 +2,7 @@
 
 <p>
     <strong>Instructor: </strong>
-    {{clas.instructor}}
+    {{class.instructor}}
 </p>
 <p>
     {{class.description}}
@@ -15,7 +15,7 @@
 </ul>
 
 {{#if user}}
-    <form id="classRegForm" method="POST" action="/students/classes/register">
+    <form id="classRegForm" method="POST" action="/{{type}}s/classes/register">
         <input type="hidden" name="student_id" value="{{user._id}}">
         <input type="hidden" name="class_id" value="{{class._id}}">
         <input type="hidden" name="class_title" value="{{class.title}}">
