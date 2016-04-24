@@ -39,7 +39,7 @@ router.post('/register', function(req, res, next) {
 	req.checkBody('password', 'Password field is required').notEmpty();
 	req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
 
-	var errors = req.validationErrors();
+	errors = req.validationErrors();
 
 	if(errors){
 		res.render('users/register', {
@@ -70,7 +70,6 @@ router.post('/register', function(req, res, next) {
 			});
 
 			User.saveStudent(newUser, newStudent, function(err, user){
-				if(err) throw err;
 				console.log('Student created');
 			});
 		} else {
@@ -89,13 +88,11 @@ router.post('/register', function(req, res, next) {
 			});
 
 			User.saveInstructor(newUser, newInstructor, function(err, user){
-				if(err) throw err;
 				console.log('Instructor created');
 			});
 		}
 
 		req.flash('success_msg', 'User Added');
-
 		res.redirect('/');
 	}
 });
@@ -112,9 +109,9 @@ passport.deserializeUser(function(id, done) {
 });
 
 router.post('/login', passport.authenticate('local',{failureRedirect:'/', failureFlash: true}), function(req, res, next) {
-  req.flash('success_msg', 'You are now logged in');
-  var usertype = req.user.type;
-  res.redirect('/' +usertype+'s/classes');
+  	req.flash('success_msg','You are now logged in');
+  	var usertype = req.user.type;
+  	res.redirect('/'+usertype+'s/classes');
 });
 
 passport.use(new LocalStrategy(
@@ -139,10 +136,14 @@ passport.use(new LocalStrategy(
   }
 ));
 
-router.get('/logout', function(req, res) {
+// Log User Out
+router.get('/logout', function(req, res){
 	req.logout();
-	req.flash('success_msg', 'You have logged out');
-	res.redirect('/');
+ 	// Success Message
+	req.flash('success_msg', "You have logged out");
+  	res.redirect('/');
 });
+
+
 
 module.exports = router;
