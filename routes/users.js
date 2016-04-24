@@ -39,7 +39,7 @@ router.post('/register', function(req, res, next) {
 	req.checkBody('password', 'Password field is required').notEmpty();
 	req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
 
-	errors = req.validationErrors();
+	var errors = req.validationErrors();
 
 	if(errors){
 		res.render('users/register', {
@@ -92,7 +92,7 @@ router.post('/register', function(req, res, next) {
 			});
 		}
 
-		req.flash('success', 'User Added');
+		req.flash('success_msg', 'User Added');
 
 		res.redirect('/');
 	}

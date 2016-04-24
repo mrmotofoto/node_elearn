@@ -12,6 +12,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
+var async = require('async');
 mongoose.connect('mongodb://localhost/elearn');
 var db = mongoose.connection;
 
@@ -68,7 +69,8 @@ app.use(flash());
 
 //GLOBAL VARS--------------------------------
 app.use(function (req, res, next) {
-  res.locals.messages = require('express-messages')(req, res);
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
   next();
 });
 
